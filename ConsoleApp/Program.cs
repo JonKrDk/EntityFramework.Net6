@@ -28,6 +28,13 @@ FootballLeagueDbContext context = new FootballLeagueDbContext();
 
 // Update
 
-var league = context.Leagues.Find(3);
-league.Name = "Sønder Revl FC";
+//var league = context.Leagues.Find(3);
+//league.Name = "Sønder Revl FC";
+//context.SaveChanges();
+
+// Delete
+
+var league = context.Leagues.Find(4);
+context.Leagues.Remove(league);
 context.SaveChanges();
+
