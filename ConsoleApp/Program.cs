@@ -3,6 +3,8 @@ using Domain;
 
 FootballLeagueDbContext context = new FootballLeagueDbContext();
 
+// Writing
+
 // context.Leagues.Add(new League { Name = "Red Stripe Premiere League" });
 
 //var league = new League { Name = "Liga 2" };
@@ -16,9 +18,16 @@ FootballLeagueDbContext context = new FootballLeagueDbContext();
 
 //context.SaveChanges();
 
-var leagues = context.Leagues.ToList();
+// Reading
+//var leagues = context.Leagues.ToList();
 
-foreach (var league in leagues)
-{
-    Console.WriteLine($"{league.Id} {league.Name}");
-}
+//foreach (var league in leagues)
+//{
+//    Console.WriteLine($"{league.Id} {league.Name}");
+//}
+
+// Update
+
+var league = context.Leagues.Find(3);
+league.Name = "Sønder Revl FC";
+context.SaveChanges();
