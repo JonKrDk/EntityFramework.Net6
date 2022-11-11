@@ -138,4 +138,6 @@ var teams = context.Teams
     .Include(q => q.HomeMatches).ThenInclude(q => q.AwayTeam)
     .FirstOrDefault(q => q.Id == 80);
 
+var teams2 = context.Teams.Include(q => q.Coach).Select(q => new { TeamName = q.Name, CoachName = q.Coach.Name }).ToList();
+
 int a = 0;
