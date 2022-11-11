@@ -34,7 +34,13 @@ FootballLeagueDbContext context = new FootballLeagueDbContext();
 
 // Delete
 
-var league = context.Leagues.Find(4);
-context.Leagues.Remove(league);
-context.SaveChanges();
+var league = context.Leagues.Find(3);
 
+Console.WriteLine(league.Id);
+Console.WriteLine(league.Name);
+foreach (Team team in league.Teams)
+{
+    Console.WriteLine("-----------");
+    Console.WriteLine(team.Id);
+    Console.WriteLine(team.Name);
+}
