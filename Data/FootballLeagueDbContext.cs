@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using Data.Configurations.Entities;
+using Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
@@ -34,6 +35,10 @@ namespace Data
                 .HasForeignKey(m => m.AwayTeamId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.ApplyConfiguration(new LeagueSeedConfiguration());
+            modelBuilder.ApplyConfiguration(new TeamSeedConfiguration());
+            modelBuilder.ApplyConfiguration(new CoachSeedConfiguration());
         }
 
         public DbSet<Team> Teams { get; set; }
