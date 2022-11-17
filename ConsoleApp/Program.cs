@@ -17,7 +17,7 @@ context.Add(team1);
 context.Add(team2);
 context.Add(team3);
 
-context.SaveChanges();
+context.SaveChanges("Hamselv");
 
 // Reading
 //var leagues = context.Leagues.ToList();

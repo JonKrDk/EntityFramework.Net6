@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    public class FootballLeagueDbContext : DbContext
+    public class FootballLeagueDbContext : AuditableFootballLeageDbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -40,24 +40,6 @@ namespace Data
             modelBuilder.ApplyConfiguration(new LeagueSeedConfiguration());
             modelBuilder.ApplyConfiguration(new TeamSeedConfiguration());
             modelBuilder.ApplyConfiguration(new CoachSeedConfiguration());
-        }
-
-        public override int SaveChanges()
-        {
-            var entries = ChangeTracker.Entries().Where(q => q.State == EntityState.Added || q.State == EntityState.Modified);
-
-            foreach (var entry in entries)
-            {
-                var auditableObject = (BaseDomainObject)entry.Entity;
-                auditableObject.ModifiedDate = DateTime.Now;
-
-                if (entry.State == EntityState.Added)
-                {
-                    auditableObject.CreatedDate = DateTime.Now;
-                }
-            }
-
-            return base.SaveChanges();
         }
 
         public DbSet<Team> Teams { get; set; }
