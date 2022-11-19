@@ -6,18 +6,31 @@ FootballLeagueDbContext context = new FootballLeagueDbContext();
 
 // Writing
 
-context.Leagues.Add(new League { Name = "Red Stripe Premiere League" });
+var transaction = context.Database.BeginTransaction();
+try
+{
+    context.Leagues.Add(new League { Name = "Red Stripe Premiere League" });
 
-var league = new League { Name = "Liga 2" };
-var team1 = new Team { Name = "Hold 2", League = league };
-var team2 = new Team { Name = "Hold 3", League = league };
-var team3 = new Team { Name = "Hold 4", League = league };
+    var league = new League { Name = "Liga 2" };
+    var team1 = new Team { Name = "Hold 2", League = league };
+    var team2 = new Team { Name = "Hold 3", League = league };
+    var team3 = new Team { Name = "Hold 4", League = league };
 
-context.Add(team1);
-context.Add(team2);
-context.Add(team3);
+    context.Add(team1);
+    context.Add(team2);
+    context.Add(team3);
 
-//context.SaveChanges("Hamselv");
+    context.SaveChanges("Hamselv");
+
+    transaction.Commit();
+}
+catch
+{
+    transaction.Rollback();
+    throw;
+}
+
+
 
 //var list1 = context.Teams.Where(team => team.Name != "Knud").ToList();
 //var list2 = from Team in context.Teams select Team;
