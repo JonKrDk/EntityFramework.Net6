@@ -17,7 +17,14 @@ context.Add(team1);
 context.Add(team2);
 context.Add(team3);
 
-context.SaveChanges("Hamselv");
+//context.SaveChanges("Hamselv");
+
+//var list1 = context.Teams.Where(team => team.Name != "Knud").ToList();
+//var list2 = from Team in context.Teams select Team;
+
+//var list3 = list2.ToList();
+
+//var a = "Hov hov";
 
 // Reading
 //var leagues = context.Leagues.ToList();

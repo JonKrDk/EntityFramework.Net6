@@ -37,6 +37,14 @@ namespace Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Team>().Property(p => p.Name).HasMaxLength(50);
+            modelBuilder.Entity<Team>().HasIndex(h => h.Name).IsUnique();
+            modelBuilder.Entity<League>().Property(p => p.Name).HasMaxLength(50);
+            modelBuilder.Entity<League>().HasIndex(h => h.Name).IsUnique();
+            modelBuilder.Entity<Coach>().Property(p => p.Name).HasMaxLength(50);
+            // Multiple fields index defined by an anonymous type
+            modelBuilder.Entity<Coach>().HasIndex(h => new { h.Name, h.TeamId }).IsUnique();
+
             modelBuilder.ApplyConfiguration(new LeagueSeedConfiguration());
             modelBuilder.ApplyConfiguration(new TeamSeedConfiguration());
             modelBuilder.ApplyConfiguration(new CoachSeedConfiguration());
