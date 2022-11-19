@@ -4,15 +4,19 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Data.Configurations.Entities
 {
-    public class LeagueSeedConfiguration : IEntityTypeConfiguration<League>
+    public class LeagueConfiguration : IEntityTypeConfiguration<League>
     {
         public void Configure(EntityTypeBuilder<League> builder)
         {
+            builder.Property(p => p.Name).HasMaxLength(50);
+            builder.HasIndex(h => h.Name).IsUnique();
+
             builder.HasData(
                 new League
                 {
