@@ -153,12 +153,12 @@ FootballLeagueDbContext context = new FootballLeagueDbContext();
 
 var leagues = context.Leagues.Include(league => league.Teams).ToList();
 
-var teams = context.Teams
+var teams3 = context.Teams
     .Include(q => q.AwayMatches).ThenInclude(q => q.HomeTeam)
     .Include(q => q.HomeMatches).ThenInclude(q => q.AwayTeam)
     .FirstOrDefault(q => q.Id == 80);
 
-var teams2 = context.Teams.Include(q => q.Coach)
+var teams4 = context.Teams.Include(q => q.Coach)
     .Select(q => new { TeamName = q.Name, CoachName = q.Coach.Name })
     .ToList();
 
