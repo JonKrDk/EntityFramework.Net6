@@ -6,29 +6,29 @@ FootballLeagueDbContext context = new FootballLeagueDbContext();
 
 // Writing
 
-var transaction = context.Database.BeginTransaction();
-try
-{
-    context.Leagues.Add(new League { Name = "Red Stripe Premiere League" });
+//var transaction = context.Database.BeginTransaction();
+//try
+//{
+//    context.Leagues.Add(new League { Name = "Red Stripe Premiere League" });
 
-    var league = new League { Name = "Liga 2" };
-    var team1 = new Team { Name = "Hold 2", League = league };
-    var team2 = new Team { Name = "Hold 3", League = league };
-    var team3 = new Team { Name = "Hold 4", League = league };
+//    var league = new League { Name = "Liga 2" };
+//    var team1 = new Team { Name = "Hold 2", League = league };
+//    var team2 = new Team { Name = "Hold 3", League = league };
+//    var team3 = new Team { Name = "Hold 4", League = league };
 
-    context.Add(team1);
-    context.Add(team2);
-    context.Add(team3);
+//    context.Add(team1);
+//    context.Add(team2);
+//    context.Add(team3);
 
-    context.SaveChanges("Hamselv");
+//    context.SaveChanges("Hamselv");
 
-    transaction.Commit();
-}
-catch
-{
-    transaction.Rollback();
-    throw;
-}
+//    transaction.Commit();
+//}
+//catch
+//{
+//    transaction.Rollback();
+//    throw;
+//}
 
 
 
@@ -151,13 +151,31 @@ catch
 
 // Seeding data end
 
-//var leagues = context.Leagues.Include(league => league.Teams).ToList();
+var leagues = context.Leagues.Include(league => league.Teams).ToList();
 
-//var teams = context.Teams
-//    .Include(q => q.AwayMatches).ThenInclude(q => q.HomeTeam)
-//    .Include(q => q.HomeMatches).ThenInclude(q => q.AwayTeam)
-//    .FirstOrDefault(q => q.Id == 80);
+var teams = context.Teams
+    .Include(q => q.AwayMatches).ThenInclude(q => q.HomeTeam)
+    .Include(q => q.HomeMatches).ThenInclude(q => q.AwayTeam)
+    .FirstOrDefault(q => q.Id == 80);
 
-//var teams2 = context.Teams.Include(q => q.Coach).Select(q => new { TeamName = q.Name, CoachName = q.Coach.Name }).ToList();
+var teams2 = context.Teams.Include(q => q.Coach)
+    .Select(q => new { TeamName = q.Name, CoachName = q.Coach.Name })
+    .ToList();
 
 //int a = 0;
+
+var teams = from team in context.Teams 
+            where team.Name != "Elefant" 
+            select team;
+
+foreach (Team team in teams)
+{
+    Console.WriteLine($"Team.Name = {team.Name}");
+}
+
+var teams2 = context.Teams.Where(t => t.Name != "Elefant").ToList();
+
+foreach (Team team in teams2)
+{
+    Console.WriteLine($"Team.Name = {team.Name}");
+}
